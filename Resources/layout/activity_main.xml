@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    android:gravity="center"
+    >
+    <TextView
+        style="@style/title_style"
+        android:text="Brick Breaker"
+        android:id="@+id/mainTitle"/>
+    <Button
+        style="@style/button_style"
+        android:id="@+id/btnPlay"
+        android:text="Play"
+            />
+    <Button
+        style="@style/button_style"
+        android:id="@+id/btnSetting"
+        android:text="Setting"/>
+
+    <Button
+        style="@style/button_style"
+        android:id="@+id/btnTopFive"
+        android:text="Top Scores"/>
+    <Button
+        style="@style/button_style"
+        android:id="@+id/buttonBack"
+        android:text="Background"/>
+    <Button
+        style="@style/button_style"
+        android:id="@+id/buttonCount"
+        android:text="Start Count"/>
+</LinearLayout>

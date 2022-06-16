@@ -1,0 +1,412 @@
+<Project>
+  <Name>Untitled</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Untitled</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Sprite</Name>
+        <Access>Public</Access>
+        <Location left="10" top="527" />
+        <Size width="240" height="281" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected Paint paint</Member>
+        <Member type="Field">protected Rect srcImg</Member>
+        <Member type="Field">protected RectF Rec</Member>
+        <Member type="Field">protected Context Con</Member>
+        <Member type="Field">protected Resources Res</Member>
+        <Member type="Field">protected SpriteColor color</Member>
+        <Member type="Property">public Vector2 Loc { get; set; }</Member>
+        <Member type="Constructor">public Sprite(Context context)</Member>
+        <Member type="Method">public abstract void Draw(Canvas canvas)</Member>
+        <Member type="Method">protected abstract Rect GetSrcImage(SpriteColor color)</Member>
+        <Member type="Method">protected abstract RectF GetRect()</Member>
+        <Member type="Method">public abstract void ChangeColor(SpriteColor newColor)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MovingSprite</Name>
+        <Access>Public</Access>
+        <Location left="400" top="823" />
+        <Size width="360" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Vector2 Speed</Member>
+        <Member type="Constructor">public MovingSprite(PointF speed, Context context)</Member>
+        <Member type="Method">public abstract override void Draw(Canvas canvas)</Member>
+        <Member type="Method">public abstract void Move(int screenHeight, int screenWidth, double dt, int x)</Member>
+        <Member type="Method">protected abstract override Rect GetSrcImage(SpriteColor color)</Member>
+        <Member type="Method">protected abstract override RectF GetRect()</Member>
+        <Member type="Method">public abstract override void ChangeColor(SpriteColor newColor)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Brick</Name>
+        <Access>Public</Access>
+        <Location left="277" top="501" />
+        <Size width="400" height="281" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected int points</Member>
+        <Member type="Field">protected int destroyPoints</Member>
+        <Member type="Field">protected int lives</Member>
+        <Member type="Field">public bool draw</Member>
+        <Member type="Constructor">public Brick(SpriteColor color, PointF loc, int width, int height, Context context)</Member>
+        <Member type="Method">public void Destroy()</Member>
+        <Member type="Method">SpriteColor NextColor()</Member>
+        <Member type="Method">public override void ChangeColor(SpriteColor newColor)</Member>
+        <Member type="Method">public override void Draw(Canvas canvas)</Member>
+        <Member type="Method">protected override RectF GetRect()</Member>
+        <Member type="Method">protected override Rect GetSrcImage(SpriteColor color)</Member>
+        <Member type="Method">public virtual HitPoint TouchBall(float r, Vector2 c, Vector2 ballSpeed)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Ball</Name>
+        <Access>Public</Access>
+        <Location left="10" top="859" />
+        <Size width="358" height="332" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public float Radius</Member>
+        <Member type="Field">public bool paused</Member>
+        <Member type="Field">public int pauseFrames = 0</Member>
+        <Member type="Field">public int finalFrames</Member>
+        <Member type="Field">Vector2 startPoint</Member>
+        <Member type="Field">bool vibrate</Member>
+        <Member type="Constructor">public Ball(SpriteColor color, Context context, float mult, bool vib)</Member>
+        <Member type="Method">public void Wait(int frames = 100)</Member>
+        <Member type="Method">protected override RectF GetRect(float mult)</Member>
+        <Member type="Method">protected override Rect GetSrcImage(SpriteColor color)</Member>
+        <Member type="Method">public override void Draw(Canvas canvas)</Member>
+        <Member type="Method">public void Hit(HitPoint hit)</Member>
+        <Member type="Method">public void Teleport()</Member>
+        <Member type="Method">public override void Move(int screenHeight, int screenWidth, double dt, int x)</Member>
+        <Member type="Method">public override void ChangeColor(SpriteColor newColor)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Bar</Name>
+        <Access>Public</Access>
+        <Location left="781" top="844" />
+        <Size width="353" height="196" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Bar(SpriteColor color, Context context)</Member>
+        <Member type="Method">protected override RectF GetRect()</Member>
+        <Member type="Method">protected override Rect GetSrcImage(SpriteColor color)</Member>
+        <Member type="Method">public override void Draw(Canvas canvas)</Member>
+        <Member type="Method">public override void Move(int screenWidth, int screenHeight, double dt, int x)</Member>
+        <Member type="Method">public HitPoint TouchBall(int r, PointF c, PointF ballSpeed)</Member>
+        <Member type="Method">public override void ChangeColor(SpriteColor newColor)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SpriteManager</Name>
+        <Access>Public</Access>
+        <Location left="10" top="10" />
+        <Size width="491" height="468" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int frameCount = 0</Member>
+        <Member type="Field">long lastTicks</Member>
+        <Member type="Field">public Ball ball</Member>
+        <Member type="Field">Bar bar</Member>
+        <Member type="Field">Brick[,] bricks</Member>
+        <Member type="Field">float spriteScale</Member>
+        <Member type="Field">int screenWidth</Member>
+        <Member type="Field">int screenHeight</Member>
+        <Member type="Field">Context context</Member>
+        <Member type="Field">ISharedPreferences sp</Member>
+        <Member type="Field">SoundPool mp</Member>
+        <Member type="Field">int beep</Member>
+        <Member type="Field">float beepVol</Member>
+        <Member type="Constructor">public SpriteManager(int screenWidth, int screenHeight, int rows, int columns, Context context)</Member>
+        <Member type="Method">public void Update(Canvas canvas)</Member>
+        <Member type="Method">public void UpdateVolume()</Member>
+        <Member type="Method">void AddBricks(int screenWidth)</Member>
+        <Member type="Method">void CheckCollisions()</Member>
+        <Member type="Method">public double CalcTicks()</Member>
+        <Member type="Method">public void DrawSprites(Canvas canvas)</Member>
+        <Member type="Method">public void MoveBar(int x)</Member>
+        <Member type="Method">public float CalcDifference()</Member>
+        <Member type="Method">public bool GameOver()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>HitType</Name>
+        <Access>Public</Access>
+        <Location left="688" top="419" />
+        <Size width="162" height="163" />
+        <Collapsed>False</Collapsed>
+        <Value>Left</Value>
+        <Value>Right</Value>
+        <Value>Up</Value>
+        <Value>Down</Value>
+        <Value>Bar</Value>
+        <Value>None</Value>
+      </Entity>
+      <Entity type="Class">
+        <Name>HitPoint</Name>
+        <Access>Public</Access>
+        <Location left="688" top="600" />
+        <Size width="192" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public HitType hit</Member>
+        <Member type="Field">public Vector2 vec</Member>
+        <Member type="Constructor">public HitPoint(HitType hit, Vector2 v = default)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>SpriteColor</Name>
+        <Access>Public</Access>
+        <Location left="513" top="261" />
+        <Size width="162" height="182" />
+        <Collapsed>False</Collapsed>
+        <Value>Blue</Value>
+        <Value>Green</Value>
+        <Value>Red</Value>
+        <Value>Purple</Value>
+        <Value>Gold</Value>
+        <Value>Grey</Value>
+        <Value>Bronze</Value>
+      </Entity>
+      <Entity type="Class">
+        <Name>DrawSurfaceView</Name>
+        <Access>Public</Access>
+        <Location left="872" top="10" />
+        <Size width="225" height="570" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public static int points = 0</Member>
+        <Member type="Field">public static int lives = 3</Member>
+        <Member type="Field">Context context</Member>
+        <Member type="Field">Rect backSrc</Member>
+        <Member type="Field">Rect screen</Member>
+        <Member type="Field">ISharedPreferences sp</Member>
+        <Member type="Field">public Thread gameThread</Member>
+        <Member type="Field">ThreadStart ts</Member>
+        <Member type="Field">public bool threadRunning = true</Member>
+        <Member type="Field">bool isRunning = true</Member>
+        <Member type="Field">public static Bitmap spriteSheet</Member>
+        <Member type="Field">Bitmap back</Member>
+        <Member type="Field">MediaPlayer p</Member>
+        <Member type="Field">SoundPool mp</Member>
+        <Member type="Field">int beep</Member>
+        <Member type="Property">public SpriteManager Sprites { get; }</Member>
+        <Member type="Constructor">public DrawSurfaceView(Context context)</Member>
+        <Member type="Method">public void UpdateSoundManager()</Member>
+        <Member type="Method">Rect CreateBack(int idRes)</Member>
+        <Member type="Method">public void Run()</Member>
+        <Member type="Method">int GetLevel()</Member>
+        <Member type="Method">public void DrawText(Canvas canvas)</Member>
+        <Member type="Method">public void Destroy()</Member>
+        <Member type="Method">public void Pause()</Member>
+        <Member type="Method">public void Resume()</Member>
+        <Member type="Method">public void StartGame()</Member>
+        <Member type="Method">public void ResetGame()</Member>
+        <Member type="Method">public void GameOver()</Member>
+        <Member type="Method">public override bool OnTouchEvent(MotionEvent e)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameDesigner</Name>
+        <Access>Public</Access>
+        <Location left="554" top="28" />
+        <Size width="219" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int[,] level</Member>
+        <Member type="Constructor">public GameDesigner(int rows, int columns)</Member>
+        <Member type="Method">public int[,] GetLevel()</Member>
+        <Member type="Method">public void GenerateLevel()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>LevelDifficulty</Name>
+        <Access>Public</Access>
+        <Location left="688" top="261" />
+        <Size width="162" height="146" />
+        <Collapsed>False</Collapsed>
+        <Value>Easy</Value>
+        <Value>Normal</Value>
+        <Value>Difficult</Value>
+        <Value>Hard</Value>
+        <Value>VeryHard</Value>
+      </Entity>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="889" top="600" />
+        <Size width="189" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string name</Member>
+        <Member type="Field">int score</Member>
+        <Member type="Constructor">public Player(int score, string name)</Member>
+        <Member type="Method">public Player Compare(Player other)</Member>
+        <Member type="Method">public string GetName()</Member>
+        <Member type="Method">public int GetScore()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="3" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>393</X>
+          <Y>1085</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>495</X>
+          <Y>1064</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="1" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>374</X>
+          <Y>830</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>99</X>
+          <Y>842</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="0" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>91</X>
+          <Y>488</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>524</X>
+          <Y>471</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>212</X>
+          <Y>496</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="7" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>715</X>
+          <Y>753</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>636</X>
+          <Y>812</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="2" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>296</X>
+          <Y>807</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>129</X>
+          <Y>833</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>830</X>
+          <Y>1073</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="7" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>784</X>
+          <Y>766</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>834</X>
+          <Y>819</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="6" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>875</X>
+          <Y>560</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>868</X>
+          <Y>574</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="5" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>531</X>
+          <Y>16</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>843</X>
+          <Y>16</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="10" second="5">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="11" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>793</X>
+          <Y>236</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>808</X>
+          <Y>155</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="12" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1123</X>
+          <Y>681</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1083</X>
+          <Y>608</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
